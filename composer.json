@@ -1,0 +1,33 @@
+{
+    "name": "hydreflab/laravel-adr",
+    "type": "library",
+    "description": "Action-Domain-Responder (ADR) pattern plugin for Laravel",
+    "keywords": ["adr", "laravel"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/HydrefLab/laravel-adr/issues",
+        "source": "https://github.com/HydrefLab/laravel-adr"
+    },
+    "authors": [
+        {
+            "name": "Michał Golon",
+            "email": "michal.golon@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "HydrefLab\\Laravel\\ADR\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HydrefLab\\Laravel\\ADR\\Test\\": "tests/"
+        }
+    }
+}
