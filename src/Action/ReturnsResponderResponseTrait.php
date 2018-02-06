@@ -2,7 +2,9 @@
 
 namespace HydrefLab\Laravel\ADR\Action;
 
-use HydrefLab\Laravel\ADR\ResponderInterface;
+use HydrefLab\Laravel\ADR\Responder\ResponderInterface;
+use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
+use Illuminate\Container\Container;
 
 trait ReturnsResponderResponseTrait
 {
@@ -19,6 +21,8 @@ trait ReturnsResponderResponseTrait
             return $response->respond();
         }
 
-        return $response;
+        $responder = ResponderResolver::resolve(get_class($this), Container::getInstance()->make('request'), $response);
+
+        return $responder->respond();
     }
 }
