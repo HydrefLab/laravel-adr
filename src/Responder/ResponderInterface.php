@@ -1,6 +1,6 @@
 <?php
 
-namespace HydrefLab\Laravel\ADR;
+namespace HydrefLab\Laravel\ADR\Responder;
 
 interface ResponderInterface
 {
