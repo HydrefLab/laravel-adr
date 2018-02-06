@@ -2,6 +2,9 @@
 
 namespace HydrefLab\Laravel\ADR;
 
+use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderResolver;
+use HydrefLab\Laravel\ADR\Responder\Resolver\ByAttributeResponderResolver;
+use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
 use HydrefLab\Laravel\ADR\Routing\ADRResourceRegistrar;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Routing\PendingResourceRegistration;
@@ -24,5 +27,8 @@ class ADRRouteServiceProvider extends RouteServiceProvider
                 new ADRResourceRegistrar($this), $name, $namespace, $options
             );
         });
+
+        ResponderResolver::extend(new ByActionClassNameResponderResolver());
+        ResponderResolver::extend(new ByAttributeResponderResolver());
     }
 }
