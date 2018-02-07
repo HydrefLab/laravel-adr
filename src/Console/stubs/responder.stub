@@ -1,0 +1,25 @@
+<?php
+
+namespace DummyNamespace;
+
+use HydrefLab\Laravel\ADR\Responder\Responder;
+use Illuminate\Http\Request;
+
+class DummyClass extends Responder
+{
+    /**
+     * @var mixed
+     */
+    protected $data;
+
+    /**
+     * @param Request $request
+     * @param mixed $data
+     */
+    public function __construct(Request $request, $data)
+    {
+        parent::__construct($request);
+
+        $this->data = $data;
+    }
+}

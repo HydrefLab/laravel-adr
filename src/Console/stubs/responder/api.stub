@@ -1,0 +1,42 @@
+<?php
+
+namespace DummyNamespace;
+
+use HydrefLab\Laravel\ADR\Responder\Responder;
+use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+class DummyClass extends Responder
+{
+    /**
+     * @var mixed
+     */
+    protected $data;
+
+    /**
+     * @param Request $request
+     * @param mixed $data
+     */
+    public function __construct(Request $request, $data)
+    {
+        parent::__construct($request);
+
+        $this->data = $data;
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    protected function respondWithJson(): JsonResponse
+    {
+        $callback = $callback ?? function (JsonResponse $response) {};
+
+        $response = (true === $this->data instanceof Responsable)
+            ? $this->data->toResponse($this->request)
+            : new JsonResponse($this->data);
+
+        return tap($response, $callback);
+    }
+}

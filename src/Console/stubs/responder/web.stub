@@ -1,0 +1,44 @@
+<?php
+
+namespace DummyNamespace;
+
+use HydrefLab\Laravel\ADR\Responder\Responder;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+class DummyClass extends Responder
+{
+    /**
+     * @var mixed
+     */
+    protected $data;
+
+    /**
+     * @var string
+     */
+    protected $viewTemplate;
+
+    /**
+     * @param Request $request
+     * @param mixed $data
+     */
+    public function __construct(Request $request, $data)
+    {
+        parent::__construct($request);
+
+        $this->data = $data;
+    }
+
+    /**
+     * @return Response
+     */
+    protected function respondWithHtml(): Response
+    {
+        $callback = $callback ?? function (View $view) {};
+
+        return new Response(
+            tap(view($this->viewTemplate, $this->data), $callback)
+        );
+    }
+}
