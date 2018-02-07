@@ -1,0 +1,17 @@
+<?php
+
+namespace DummyNamespace;
+
+use HydrefLab\Laravel\ADR\Action\Action;
+
+class DummyClass extends Action
+{
+    /**
+     * @param mixed $id
+     * @return mixed
+     */
+    public function __invoke($id)
+    {
+        //
+    }
+}

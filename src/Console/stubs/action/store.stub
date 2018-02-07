@@ -1,0 +1,18 @@
+<?php
+
+namespace DummyNamespace;
+
+use HydrefLab\Laravel\ADR\Action\Action;
+use Illuminate\Http\Request;
+
+class DummyClass extends Action
+{
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function __invoke(Request $request)
+    {
+        //
+    }
+}
