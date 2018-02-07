@@ -2,6 +2,8 @@
 
 namespace HydrefLab\Laravel\ADR;
 
+use HydrefLab\Laravel\ADR\Console\ActionMakeCommand;
+use HydrefLab\Laravel\ADR\Console\ResponderMakeCommand;
 use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderResolver;
 use HydrefLab\Laravel\ADR\Responder\Resolver\ByAttributeResponderResolver;
 use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
@@ -12,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 
 class ADRRouteServiceProvider extends RouteServiceProvider
 {
+    /**
+     * @return void
+     */
+    public function boot()
+    {
+        $this->commands([
+            ActionMakeCommand::class,
+            ResponderMakeCommand::class,
+        ]);
+    }
+
     /**
      * @return void
      */
