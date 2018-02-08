@@ -12,7 +12,7 @@ class ActionMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'adr:make:action';
+    protected $name = 'make:adr:action';
 
     /**
      * The console command description.
@@ -33,7 +33,7 @@ class ActionMakeCommand extends GeneratorCommand
      *
      * @var array
      */
-    protected $actionTypes = ['Index', 'Create', 'Store', 'Show', 'Edit', 'Update', 'Destroy'];
+    protected $actionTypes = ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'];
 
     /**
      * Execute the console command.
@@ -42,7 +42,7 @@ class ActionMakeCommand extends GeneratorCommand
      */
     public function handle()
     {
-        if (false === is_null($this->option('responder'))) {
+        if (true === $this->option('responder')) {
             $this->createResponder();
         }
 
@@ -50,13 +50,13 @@ class ActionMakeCommand extends GeneratorCommand
     }
 
     /**
-     * Generate action responder too.
+     * Call responder generator command.
      *
      * @return void
      */
     protected function createResponder()
     {
-        $this->call('adr:make:responder', [
+        $this->call('make:adr:responder', [
             'name' => $this->argument('name') . 'Responder',
             '--type' => $this->option('responder_type')
         ]);
