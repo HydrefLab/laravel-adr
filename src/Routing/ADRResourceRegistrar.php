@@ -3,6 +3,7 @@
 namespace HydrefLab\Laravel\ADR\Routing;
 
 use Illuminate\Routing\ResourceRegistrar;
+use Illuminate\Support\Str;
 
 class ADRResourceRegistrar extends ResourceRegistrar
 {
@@ -18,7 +19,7 @@ class ADRResourceRegistrar extends ResourceRegistrar
     protected function getResourceAction($resource, $namespace, $method, $options)
     {
         $name = $this->getResourceRouteName($resource, $method, $options);
-        $actionHandler = $this->getActionClassName(trim($namespace, '\\'), ucfirst($method), ucfirst($resource));
+        $actionHandler = $this->getActionClassName(trim($namespace, '\\'), $method, $resource);
 
         $action = ['as' => $name, 'uses' => $actionHandler];
 
@@ -37,8 +38,10 @@ class ADRResourceRegistrar extends ResourceRegistrar
      */
     private function getActionClassName(string $namespace, string $method, string $resource): string
     {
+        $resource = ('index' !== $method) ? Str::singular($resource) : Str::plural($resource);
+
         return (false === empty($namespace))
-            ? sprintf('%s\%s%sAction', $namespace, $method, $resource)
-            : sprintf('%s%sAction', $method, $resource);
+            ? sprintf('%s\%s%sAction', $namespace, ucfirst($method), ucfirst($resource))
+            : sprintf('%s%sAction', ucfirst($method), ucfirst($resource));
     }
 }
