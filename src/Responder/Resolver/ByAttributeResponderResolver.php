@@ -10,6 +10,10 @@ class ByAttributeResponderResolver
      */
     public function __invoke(string $actionClassName)
     {
-        return (new \ReflectionClass($actionClassName))->getDefaultProperties()['responderClass'] ?? null;
+        try {
+            return (new \ReflectionClass($actionClassName))->getDefaultProperties()['responderClass'] ?? null;
+        } catch (\ReflectionException $e) {
+            return null;
+        }
     }
 }

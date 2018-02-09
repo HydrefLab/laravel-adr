@@ -10,12 +10,14 @@ class ByActionClassNameResponderResolver
      */
     public function __invoke(string $actionClassName): string
     {
-        $actionClassReflection = new \ReflectionClass($actionClassName);
+        $actionClassName = explode('\\', $actionClassName);
 
-        return sprintf(
+        $responderClassName = sprintf(
             '%s\\%s',
-            str_replace('Actions', 'Responders', $actionClassReflection->getNamespaceName()),
-            $actionClassReflection->getShortName() . 'Responder'
+            str_replace('Actions', 'Responders', implode('\\', array_slice($actionClassName, 0, -1))),
+            last($actionClassName) . 'Responder'
         );
+
+        return trim($responderClassName, '\\');
     }
 }

@@ -14,27 +14,41 @@ class ResponderResolver
     /**
      * @param string $actionClassName
      * @param Request $request
-     * @param mixed $response
+     * @param array ...$response
      * @return ResponderInterface
-     * @throws \Exception
      */
-    public static function resolve(string $actionClassName, Request $request, $response): ResponderInterface
+    public static function resolve(string $actionClassName, Request $request, ...$response): ResponderInterface
+    {
+        $responderClassName = static::resolveClassName($actionClassName);
+
+        if (false === is_null($responderClassName) && true === class_exists($responderClassName)) {
+            $responder = new $responderClassName($request, ...$response);
+
+            if (false === $responder instanceof ResponderInterface) {
+                throw new \InvalidArgumentException("Responder $responderClassName must implement ResponderInterface interface");
+            }
+
+            return $responder;
+        }
+
+        throw new \InvalidArgumentException("Could not find responder for action $actionClassName");
+    }
+
+    /**
+     * @param string $actionClassName
+     * @return null|string
+     */
+    public static function resolveClassName(string $actionClassName)
     {
         foreach (array_reverse(static::$resolvers) as $resolver) {
             $responderClassName = $resolver($actionClassName);
 
-            if (false === is_null($responderClassName) && true === class_exists($responderClassName)) {
-                $responder = new $responderClassName($request, $response);
-
-                if (false === $responder instanceof ResponderInterface) {
-                    throw new \Exception();
-                }
-
-                return $responder;
+            if (false === is_null($responderClassName)) {
+                return $responderClassName;
             }
         }
 
-        throw new \Exception();
+        return null;
     }
 
     /**
