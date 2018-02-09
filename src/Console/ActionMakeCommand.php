@@ -2,6 +2,7 @@
 
 namespace HydrefLab\Laravel\ADR\Console;
 
+use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -57,7 +58,7 @@ class ActionMakeCommand extends GeneratorCommand
     protected function createResponder()
     {
         $this->call('make:adr:responder', [
-            'name' => $this->argument('name') . 'Responder',
+            'name' => ResponderResolver::resolveClassName($this->argument('name')),
             '--type' => $this->option('responder_type')
         ]);
     }

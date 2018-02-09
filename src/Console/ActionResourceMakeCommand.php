@@ -2,8 +2,8 @@
 
 namespace HydrefLab\Laravel\ADR\Console;
 
+use HydrefLab\Laravel\ADR\Action\ActionResolver;
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -46,7 +46,7 @@ class ActionResourceMakeCommand extends GeneratorCommand
     {
         foreach ($this->getActionTypes() as $actionType) {
             $this->call('make:adr:action', [
-                'name' => $this->getActionClass($this->argument('resource'), $actionType),
+                'name' => $this->getActionClassName($this->argument('resource'), $actionType),
                 '--responder' => $this->option('responder'),
                 '--responder_type' => (true === $this->option('responder')) ? $this->option('type') : null,
             ]);
@@ -70,18 +70,14 @@ class ActionResourceMakeCommand extends GeneratorCommand
      * @param string $actionType
      * @return string
      */
-    protected function getActionClass(string $resource, string $actionType): string
+    protected function getActionClassName(string $resource, string $actionType): string
     {
-        $resource = str_replace('/', '\\', $resource);
-        $resource = explode('\\', $resource);
+        $resource = explode('\\', str_replace('/', '\\', $resource));
 
-        $resourceName = ('index' !== $actionType) ? Str::singular(last($resource)) : Str::plural(last($resource));
-
-        return sprintf(
-            '%s\%s%sAction',
+        return ActionResolver::resolveClassName(
             implode('\\', array_slice($resource, 0, -1)),
-            ucfirst($actionType),
-            ucfirst($resourceName)
+            last($resource),
+            $actionType
         );
     }
 
