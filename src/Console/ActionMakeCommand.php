@@ -51,6 +51,35 @@ class ActionMakeCommand extends GeneratorCommand
     }
 
     /**
+     * Build the class with the given name.
+     *
+     * Import responder class name and add responder protected variable if responder option was passed.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected function buildClass($name)
+    {
+        $responderClassNameReplacement = '';
+        $responderShortClassNameReplacement = '';
+
+        if (true === $this->option('responder')) {
+            $responderClassName = ResponderResolver::resolveClassName($name);
+            $responderClassNameReplacement = sprintf("\nuse %s;", $responderClassName);
+            $responderShortClassNameReplacement = sprintf(
+                "\n\t/**\n\t * @var string\n\t */\n\tprotected \$responder = %s::class;\n",
+                class_basename($responderClassName)
+            );
+        }
+
+        return str_replace(
+            ['DummyResponderClassName', 'DummyResponderShortClassName'],
+            [$responderClassNameReplacement, $responderShortClassNameReplacement],
+            parent::buildClass($name)
+        );
+    }
+
+    /**
      * Call responder generator command.
      *
      * @return void
