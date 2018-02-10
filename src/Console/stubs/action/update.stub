@@ -1,12 +1,12 @@
 <?php
 
 namespace DummyNamespace;
-
+DummyResponderClassName
 use HydrefLab\Laravel\ADR\Action\Action;
 use Illuminate\Http\Request;
 
 class DummyClass extends Action
-{
+{DummyResponderShortClassName
     /**
      * @param Request $request
      * @param mixed $id
@@ -14,6 +14,8 @@ class DummyClass extends Action
      */
     public function __invoke(Request $request, $id)
     {
-        //
+        // Do magic...
+
+        return responder(/* pass data here */);
     }
 }

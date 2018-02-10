@@ -1,16 +1,18 @@
 <?php
 
 namespace DummyNamespace;
-
+DummyResponderClassName
 use HydrefLab\Laravel\ADR\Action\Action;
 
 class DummyClass extends Action
-{
+{DummyResponderShortClassName
     /**
      * @return mixed
      */
     public function __invoke()
     {
-        //
+        // Do magic...
+
+        return responder(/* pass data here */);
     }
 }
