@@ -1,0 +1,82 @@
+<?php
+
+namespace HydrefLab\Laravel\ADR\Console;
+
+use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
+use Symfony\Component\Console\Input\InputOption;
+
+class ResponderResourceMakeCommand extends ActionResourceMakeCommand
+{
+    /**
+     * The console command name.
+     *
+     * @var string
+     */
+    protected $name = 'make:adr:responder_resource';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Create a new CRUD responder (ADR) class';
+
+    /**
+     * The type of class being generated.
+     *
+     * @var string
+     */
+    protected $type = 'Responder';
+
+    /**
+     * Execute the console command.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        foreach ($this->getActionTypes() as $actionType) {
+            $this->call('make:adr:responder', [
+                'name' => $this->getResponderClassName($this->argument('resource'), $actionType),
+                '--type' => $this->option('type'),
+            ]);
+        }
+    }
+
+    /**
+     * @param string $resource
+     * @param string $actionType
+     * @return string
+     */
+    protected function getResponderClassName(string $resource, string $actionType): string
+    {
+        return ResponderResolver::resolveClassName($this->getActionClassName($resource, $actionType));
+    }
+
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param  string  $rootNamespace
+     * @return string
+     */
+    protected function getDefaultNamespace($rootNamespace)
+    {
+        return $rootNamespace . '\Http\Responders';
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['type', 't', InputOption::VALUE_OPTIONAL, 'Responder type (api or web).'],
+
+            ['only', 'o', InputOption::VALUE_OPTIONAL, 'Set resource only responders.'],
+
+            ['except', 'e', InputOption::VALUE_OPTIONAL, 'Set resource except responders.'],
+        ];
+    }
+}

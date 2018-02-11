@@ -5,6 +5,7 @@ namespace HydrefLab\Laravel\ADR;
 use HydrefLab\Laravel\ADR\Console\ActionMakeCommand;
 use HydrefLab\Laravel\ADR\Console\ActionResourceMakeCommand;
 use HydrefLab\Laravel\ADR\Console\ResponderMakeCommand;
+use HydrefLab\Laravel\ADR\Console\ResponderResourceMakeCommand;
 use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderResolver;
 use HydrefLab\Laravel\ADR\Responder\Resolver\ByAttributeResponderResolver;
 use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
@@ -24,6 +25,7 @@ class ADRRouteServiceProvider extends RouteServiceProvider
             ActionMakeCommand::class,
             ActionResourceMakeCommand::class,
             ResponderMakeCommand::class,
+            ResponderResourceMakeCommand::class,
         ]);
     }
 
