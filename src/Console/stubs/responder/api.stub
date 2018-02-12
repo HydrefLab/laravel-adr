@@ -3,50 +3,15 @@
 namespace DummyNamespace;
 
 use HydrefLab\Laravel\ADR\Responder\Responder;
-use Illuminate\Contracts\Support\Responsable;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class DummyClass extends Responder
 {
     /**
-     * @var mixed
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected $data;
-
-    /**
-     * @var int
-     */
-    protected $status;
-
-    /**
-     * @var array
-     */
-    protected $headers;
-
-    /**
-     * @param Request $request
-     * @param mixed $data
-     * @param int $status
-     * @param array $headers
-     */
-    public function __construct(Request $request, $data, int $status = 200, array $headers = [])
+    public function respond(): \Symfony\Component\HttpFoundation\Response
     {
-        parent::__construct($request);
-
-        $this->data = $data;
-        $this->status = $status;
-        $this->headers = $headers;
-    }
-
-    /**
-     * @return JsonResponse
-     */
-    protected function respondWithJson(): JsonResponse
-    {
-        return (true === $this->data instanceof Responsable)
-            ? $this->data->toResponse($this->request)
-            : new JsonResponse($this->data, $this->status, $this->headers);
+        return parent::respond();
     }
 }
