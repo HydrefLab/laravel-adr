@@ -2,7 +2,11 @@
 
 namespace HydrefLab\Laravel\ADR\Responder;
 
+use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 abstract class Responder implements ResponderInterface
 {
@@ -15,16 +19,60 @@ abstract class Responder implements ResponderInterface
     ];
 
     /**
+     * @var array
+     */
+    protected $additionalFormats = [];
+
+    /**
      * @var Request
      */
     protected $request;
 
     /**
-     * @param Request $request
+     * @var mixed
      */
-    public function __construct(Request $request)
+    protected $data;
+
+    /**
+     * @var int
+     */
+    protected $status;
+
+    /**
+     * @var array
+     */
+    protected $headers;
+
+    /**
+     * @var \Closure|null
+     */
+    protected $callback;
+
+    /**
+     * @var string
+     *
+     */
+    protected $viewTemplate;
+
+    /**
+     * @param Request $request
+     * @param $data
+     * @param int $status
+     * @param array $headers
+     * @param \Closure $callback
+     */
+    public function __construct(Request $request, $data, int $status = 200, array $headers = [], \Closure $callback = null)
     {
         $this->request = $request;
+
+        foreach ($this->additionalFormats as $format => $mimeTypes) {
+            $this->request->setFormat($format, $mimeTypes);
+        }
+
+        $this->data = $data;
+        $this->status = $status;
+        $this->headers = $headers;
+        $this->callback = $callback ?? function (View $view) {};
     }
 
     /**
@@ -40,7 +88,7 @@ abstract class Responder implements ResponderInterface
             return $this->{$method}();
         }
 
-        throw new \Exception();
+        throw new \Exception("Cannot create response. Method $method is missing in {$this->getClassName()} responder.");
     }
 
     /**
@@ -48,12 +96,36 @@ abstract class Responder implements ResponderInterface
      */
     protected function getResponseFormat(): string
     {
-        $format = $this->request->format(null);
+        return $this->request->format();
+    }
 
-        if (true === is_null($format)) {
-            // check for other options
-        }
+    /**
+     * @return string
+     */
+    protected function getClassName(): string
+    {
+        return class_basename($this);
+    }
 
-        return $format ?? 'html';
+    /**
+     * @return Response
+     */
+    protected function respondWithHtml(): Response
+    {
+        return new Response(
+            tap(view($this->viewTemplate, $this->data), $this->callback),
+            $this->status,
+            $this->headers
+        );
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    protected function respondWithJson(): JsonResponse
+    {
+        return (true === $this->data instanceof Responsable)
+            ? $this->data->toResponse($this->request)
+            : new JsonResponse($this->data, $this->status, $this->headers);
     }
 }
