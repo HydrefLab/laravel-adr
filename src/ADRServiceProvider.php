@@ -34,20 +34,35 @@ class ADRServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->addAdrResourceRouteMacro();
+        $this->addAdrResourceRouteMacros();
         $this->extendResponderResolver();
     }
 
     /**
      * @return void
      */
-    protected function addAdrResourceRouteMacro()
+    protected function addAdrResourceRouteMacros()
     {
         Route::macro('adrResource', function (string $name, $namespace = '', array $options = []) {
             if (func_num_args() === 2 && true === is_array(func_get_arg(1))) {
                 $options = func_get_arg(1);
                 $namespace = '';
             }
+
+            return new PendingResourceRegistration(
+                new ADRResourceRegistrar($this), $name, $namespace, $options
+            );
+        });
+
+        Route::macro('apiAdrResource', function (string $name, $namespace = '', array $options = []) {
+            if (func_num_args() === 2 && true === is_array(func_get_arg(1))) {
+                $options = func_get_arg(1);
+                $namespace = '';
+            }
+
+            $options = array_merge([
+                'only' => ['index', 'show', 'store', 'update', 'destroy'],
+            ], $options);
 
             return new PendingResourceRegistration(
                 new ADRResourceRegistrar($this), $name, $namespace, $options
