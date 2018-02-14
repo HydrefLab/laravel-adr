@@ -55,18 +55,9 @@ class ADRServiceProvider extends ServiceProvider
         });
 
         Route::macro('apiAdrResource', function (string $name, $namespace = '', array $options = []) {
-            if (func_num_args() === 2 && true === is_array(func_get_arg(1))) {
-                $options = func_get_arg(1);
-                $namespace = '';
-            }
-
-            $options = array_merge([
+            return $this->adrResource($name, $namespace, array_merge([
                 'only' => ['index', 'show', 'store', 'update', 'destroy'],
-            ], $options);
-
-            return new PendingResourceRegistration(
-                new ADRResourceRegistrar($this), $name, $namespace, $options
-            );
+            ], $options));
         });
     }
 
