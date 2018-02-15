@@ -3,17 +3,17 @@
 namespace HydrefLab\Laravel\ADR\Responder;
 
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\View\View;
 
 abstract class Responder implements ResponderInterface
 {
     /**
      * @var array
      */
-    protected $map = [
+    protected $responseFormatMap = [
         'html' => 'respondWithHtml',
         'json' => 'respondWithJson',
     ];
@@ -82,7 +82,7 @@ abstract class Responder implements ResponderInterface
     public function respond(): \Symfony\Component\HttpFoundation\Response
     {
         $format = $this->getResponseFormat();
-        $method = $this->map[$format];
+        $method = $this->responseFormatMap[$format];
 
         if (true === method_exists($this, $method)) {
             return $this->{$method}();
@@ -112,11 +112,11 @@ abstract class Responder implements ResponderInterface
      */
     protected function respondWithHtml(): Response
     {
-        return new Response(
-            tap(view($this->viewTemplate, $this->data), $this->callback),
-            $this->status,
-            $this->headers
-        );
+        $view = (true === $this->data instanceof View)
+            ? $this->data
+            : view($this->viewTemplate, $this->data);
+
+        return new Response(tap($view, $this->callback), $this->status, $this->headers);
     }
 
     /**
