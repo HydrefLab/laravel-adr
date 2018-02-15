@@ -3,7 +3,6 @@
 namespace DummyNamespace;
 
 use HydrefLab\Laravel\ADR\Responder\Responder;
-use Illuminate\Http\Request;
 
 class DummyClass extends Responder
 {

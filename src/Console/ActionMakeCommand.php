@@ -65,7 +65,7 @@ class ActionMakeCommand extends GeneratorCommand
 
         if (true === $this->option('responder')) {
             $responderClassName = ResponderResolver::resolveClassName($name);
-            $responderClassNameReplacement = sprintf("\nuse %s;", $responderClassName);
+            $responderClassNameReplacement = sprintf("use %s;\n", $responderClassName);
             $responderShortClassNameReplacement = sprintf(
                 "\n\t/**\n\t * @var string\n\t */\n\tprotected \$responder = %s::class;\n",
                 class_basename($responderClassName)

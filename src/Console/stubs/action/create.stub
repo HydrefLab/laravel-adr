@@ -1,9 +1,9 @@
 <?php
 
 namespace DummyNamespace;
-DummyResponderClassName
-use HydrefLab\Laravel\ADR\Action\Action;
 
+use App\Http\Actions\Action;
+DummyResponderClassName
 class DummyClass extends Action
 {DummyResponderShortClassName
     /**
