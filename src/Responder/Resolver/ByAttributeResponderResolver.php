@@ -12,7 +12,7 @@ class ByAttributeResponderResolver
     {
         try {
             return (new \ReflectionClass($actionClassName))->getDefaultProperties()['responderClass'] ?? null;
-        } catch (\ReflectionException $e) {
+        } catch (\Exception $e) {
             return null;
         }
     }
