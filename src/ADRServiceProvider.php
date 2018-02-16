@@ -21,6 +21,10 @@ class ADRServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishes([
+            __DIR__ . '/stubs/Action.stub' => app_path('Http/Actions/Action.php')
+        ]);
+
         $this->commands([
             ActionMakeCommand::class,
             ActionResourceMakeCommand::class,
