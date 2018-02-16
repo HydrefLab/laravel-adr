@@ -2,9 +2,10 @@
 
 namespace HydrefLab\Laravel\ADR\Tests\stubs;
 
+use HydrefLab\Laravel\ADR\Responder\ResponderInterface;
 use Illuminate\Http\Request;
 
-class DummyEmptyActionResponder
+class DummyResponderActionResponder implements ResponderInterface
 {
     /**
      * @var Request
