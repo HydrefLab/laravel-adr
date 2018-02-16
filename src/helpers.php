@@ -25,11 +25,10 @@ if (false === function_exists('get_caller_class')) {
 
 if (false === function_exists('responder')) {
     /**
-     * @param array ...$args
      * @return ResponderInterface
      */
-    function responder(...$args): ResponderInterface
+    function responder(): ResponderInterface
     {
-        return ResponderFactory::create(Container::getInstance()->make('request'), ...$args);
+        return ResponderFactory::create(Container::getInstance()->make('request'), ...func_get_args());
     }
 }
