@@ -5,6 +5,8 @@ namespace HydrefLab\Laravel\ADR\Responder\Resolver;
 class ByActionClassNameResponderResolver
 {
     /**
+     * Resolve responder class name by action class name.
+     *
      * @param string $actionClassName
      * @return string
      */

@@ -6,6 +6,8 @@ use Illuminate\Container\Container;
 
 if (false === function_exists('get_caller_class')) {
     /**
+     * Get class name of a caller object.
+     *
      * @return null|string
      */
     function get_caller_class()
@@ -25,6 +27,8 @@ if (false === function_exists('get_caller_class')) {
 
 if (false === function_exists('responder')) {
     /**
+     * Create new responder.
+     *
      * @return ResponderInterface
      */
     function responder(): ResponderInterface

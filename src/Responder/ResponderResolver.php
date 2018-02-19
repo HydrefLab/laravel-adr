@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 class ResponderResolver
 {
     /**
+     * Registered resolvers.
+     *
      * @var array
      */
     protected static $resolvers = [];
 
     /**
+     * Resolve and create new responder instance based on action class name.
+     *
      * @param string $actionClassName
      * @param Request $request
      * @param array ...$response
@@ -35,6 +39,8 @@ class ResponderResolver
     }
 
     /**
+     * Resolve responder class name based on action class name.
+     *
      * @param string $actionClassName
      * @return null|string
      */
@@ -52,6 +58,8 @@ class ResponderResolver
     }
 
     /**
+     * Register resolver.
+     *
      * @param callable $resolver
      * @return void
      */

@@ -7,6 +7,10 @@ use HydrefLab\Laravel\ADR\Responder\ResponderInterface;
 trait ReturnsResponderResponseTrait
 {
     /**
+     * Return action response.
+     *
+     * If action returns responder, call proper method to create response.
+     *
      * @param string $method
      * @param array $parameters
      * @return \Symfony\Component\HttpFoundation\Response

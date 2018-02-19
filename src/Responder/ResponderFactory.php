@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 class ResponderFactory
 {
     /**
+     * Create new responder.
+     *
      * @param Request $request
      * @param array ...$args
      * @return ResponderInterface

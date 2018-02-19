@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 class ActionResolver
 {
     /**
+     * Resolve action class name.
+     *
      * @param string $namespace
      * @param string $resource
      * @param string $actionType
@@ -14,7 +16,9 @@ class ActionResolver
      */
     public static function resolveClassName(string $namespace, string $resource, string $actionType): string
     {
-        $resource = ('index' !== Str::lower($actionType)) ? Str::singular($resource) : Str::plural($resource);
+        $resource = ('index' !== Str::lower($actionType))
+            ? Str::singular($resource)
+            : Str::plural($resource);
 
         $actionClassName = sprintf(
             '%s\%s%sAction',

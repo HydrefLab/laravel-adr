@@ -11,46 +11,67 @@ use Illuminate\Http\Response;
 abstract class Responder implements ResponderInterface
 {
     /**
+     * Map between response expected data format and method for response creation.
+     *
+     * Map is an array where keys are expected data formats, and values are method
+     * names that should be executed in order to create response.
+     *
      * @var array
      */
     protected $responseFormatMap = [
-        'html' => 'respondWithHtml',
-        'json' => 'respondWithJson',
+        'html' => 'html',
+        'json' => 'json',
     ];
 
     /**
+     * Additional data formats expected in the response.
+     *
+     * @see \Symfony\Component\HttpFoundation\Request::initializeFormats() for
+     * initial formats handled by request.
+     *
      * @var array
      */
     protected $additionalFormats = [];
 
     /**
+     * Request instance.
+     *
      * @var Request
      */
     protected $request;
 
     /**
+     * Response data.
+     *
      * @var mixed
      */
     protected $data;
 
     /**
+     * Response status.
+     *
      * @var int
      */
     protected $status;
 
     /**
+     * Response headers.
+     *
      * @var array
      */
     protected $headers;
 
     /**
+     * Callback for modifying View instance.
+     *
      * @var \Closure|null
      */
     protected $callback;
 
     /**
-     * @var string
+     * Template name for html-like responses.
      *
+     * @var string
      */
     protected $viewTemplate;
 
@@ -76,6 +97,11 @@ abstract class Responder implements ResponderInterface
     }
 
     /**
+     * Create new response.
+     *
+     * Before creating response, content negotiation is performed to determine the best
+     * available data format expected by the client.
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
@@ -92,6 +118,10 @@ abstract class Responder implements ResponderInterface
     }
 
     /**
+     * Get the data format expected in the response.
+     *
+     * 'html' format is returned as default.
+     *
      * @return string
      */
     protected function getResponseFormat(): string
@@ -100,6 +130,8 @@ abstract class Responder implements ResponderInterface
     }
 
     /**
+     * Get responder class name.
+     *
      * @return string
      */
     protected function getClassName(): string
@@ -108,9 +140,11 @@ abstract class Responder implements ResponderInterface
     }
 
     /**
+     * Create html-like response.
+     *
      * @return Response
      */
-    protected function respondWithHtml(): Response
+    protected function html(): Response
     {
         $view = (true === $this->data instanceof View)
             ? $this->data
@@ -120,9 +154,11 @@ abstract class Responder implements ResponderInterface
     }
 
     /**
+     * Create json-like response.
+     *
      * @return JsonResponse
      */
-    protected function respondWithJson(): JsonResponse
+    protected function json(): JsonResponse
     {
         return (true === $this->data instanceof Responsable)
             ? $this->data->toResponse($this->request)

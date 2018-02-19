@@ -17,6 +17,8 @@ use Illuminate\Support\ServiceProvider;
 class ADRServiceProvider extends ServiceProvider
 {
     /**
+     * Bootstrap any application services.
+     *
      * @return void
      */
     public function boot()
@@ -34,6 +36,8 @@ class ADRServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the service provider.
+     *
      * @return void
      */
     public function register()
@@ -43,6 +47,8 @@ class ADRServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register Router macros for ADR.
+     *
      * @return void
      */
     protected function addAdrResourceRouteMacros()
@@ -66,6 +72,8 @@ class ADRServiceProvider extends ServiceProvider
     }
 
     /**
+     * Extend responder resolver with default resolvers.
+     *
      * @return void
      */
     protected function extendResponderResolver()
