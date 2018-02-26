@@ -64,10 +64,9 @@ Laravel.
 
 ### Naming
 
-All actions should have `Action` postfix added to the class (and file) name, for example `ShowUsersAction`.
+All actions should have `Action` postfix added to the class name, for example `ShowUserAction`.
 
-All responders should have `Responder` postfix added to the class (and file) name, for example 
-`ShowUsersActionResponder`.
+All responders should have `Responder` postfix added to the class name, for example `ShowUserActionResponder`.
 
 ### File placement
 
@@ -93,9 +92,9 @@ class ShowUserAction extends Action
      */
     public function __invoke(Request $request, $id)
     {
-        $users = User::all();
+        $user = User::find($id);
         
-        return responder($users); // or ResponderFactory::create($request, $users)
+        return responder($user); // or ResponderFactory::create($request, $user)
     }
 }
 ```
@@ -155,12 +154,12 @@ This will produce following result:
 
 `adrResource` and `adrApiResource` are route macros and you can use them in the same way as you can use resource 
 controller routes registration, i.e. pass namespace or additional route options:
-```
+```php
 // controller approach
-Route::resource('users', 'MyNamespace/UsersController', ['except' => ['destroy]]);
+Route::resource('users', 'MyNamespace/UsersController', ['except' => ['destroy']]);
 
 // action approach
-Route::adrResource('users', 'MyNamespace', ['except' => ['destroy]]);
+Route::adrResource('users', 'MyNamespace', ['except' => ['destroy']]);
 ```
 The only difference here is that in controller approach you pass namespace or partial namespace of the controller, while
 in action approach you specify namespace or partial namespace of the all actions.
@@ -255,6 +254,9 @@ Package adds 4 console commands for generating actions and responders.
 Running `php artisan make:adr:action MyAwesomeAction` will create new `MyAwesomeAction` class in `app/Http/Actions` 
 directory.
  
+Command takes one argument:
+* `name` - action's class name.
+ 
 Command takes two options:
 * `-r` or `--responder` - flag to generate responder class along with the action class (giving example above,
 `MyAwesomeActionResponder` class will be generated in `app/Http/Responders` directory; action class will have 
@@ -266,26 +268,43 @@ Command takes two options:
 Running `php artisan make:adr:action_resource Users` will create resource-like actions (5 or 7). All classes will be 
 generated in `app/Http/Actions` directory.
 
+Command takes one argument:
+* `name` - resource name (with namespace).
+
 Command takes four options:
 * `-r` or `--responder` - flag to generate responder classes along with actions (it will behave in the same way as 
-command above),
+command above, i.e. generate set or responders and bind them with controller via class property),
 * `-t` or `--responder_type` - flag to indicate responders type: `api` or `web`,
 * `-o` or `--only` - flag to set which resource type to generate (similar to route options),
 * `-e` or `--except` - flag to set which resource type not to generate (similar to route options).
 
+Example:
+```
+php artisan make:adr:action_resource Users -r -t=api
+```
+will generate 5 action classes and 5 responders classes:
+* `DestroyUserAction`, `IndexUsersAction`, `ShowUserAction`, `StoreUserAction`, `UpdateUserAction` (all in `app/Http/Actions`),
+* `DestroyUserActionResponder`, `IndexUsersActionResponder`, `ShowUserActionResponder`, `StoreUserActionResponder`, 
+`UpdateUserActionResponder` (all in `app/Http/Responders`).
 
 ### `artisan make:adr:responder`
 
 Running `php artisan make:adr:responder MyAwesomeActionResponder` will create new `MyAwesomeActionResponder` class in
 `app/Http/Responders` directory.
+
+Command takes one argument:
+* `name` - responder's class name.
  
 Command takes one option:
 * `-t` or `--type` - flag to indicate responder's type: `api` or `web`.
 
 ### `artisan make:adr:responder_resource`
 
-Running `php artisan make:adr:responder_resource` will create resource-like responders (5 or 7). All classes will be 
+Running `php artisan make:adr:responder_resource Users` will create resource-like responders (5 or 7). All classes will be 
 generated in `app/Http/Responders` directory.
+
+Command takes one argument:
+* `name` - resource name (with namespace).
 
 Command takes three options:
 * `-t` or `--type` - flag to indicate responders type: `api` or `web`,
