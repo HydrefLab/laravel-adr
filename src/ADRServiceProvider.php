@@ -2,12 +2,14 @@
 
 namespace HydrefLab\Laravel\ADR;
 
+use HydrefLab\Laravel\ADR\Action\ActionResolver;
+use HydrefLab\Laravel\ADR\Action\Resolver\DefaultActionClassNameResolver;
 use HydrefLab\Laravel\ADR\Console\ActionMakeCommand;
 use HydrefLab\Laravel\ADR\Console\ActionResourceMakeCommand;
 use HydrefLab\Laravel\ADR\Console\ResponderMakeCommand;
 use HydrefLab\Laravel\ADR\Console\ResponderResourceMakeCommand;
-use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderResolver;
-use HydrefLab\Laravel\ADR\Responder\Resolver\ByAttributeResponderResolver;
+use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderClassNameResolver;
+use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionPropertyResponderClassNameResolver;
 use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
 use HydrefLab\Laravel\ADR\Routing\ADRResourceRegistrar;
 use Illuminate\Routing\PendingResourceRegistration;
@@ -43,6 +45,7 @@ class ADRServiceProvider extends ServiceProvider
     public function register()
     {
         $this->addAdrResourceRouteMacros();
+        $this->extendActionResolver();
         $this->extendResponderResolver();
     }
 
@@ -72,13 +75,23 @@ class ADRServiceProvider extends ServiceProvider
     }
 
     /**
+     * Extend action resolver with default resolvers.
+     *
+     * @return void
+     */
+    protected function extendActionResolver()
+    {
+        ActionResolver::extend(new DefaultActionClassNameResolver());
+    }
+
+    /**
      * Extend responder resolver with default resolvers.
      *
      * @return void
      */
     protected function extendResponderResolver()
     {
-        ResponderResolver::extend(new ByActionClassNameResponderResolver());
-        ResponderResolver::extend(new ByAttributeResponderResolver());
+        ResponderResolver::extend(new ByActionClassNameResponderClassNameResolver());
+        ResponderResolver::extend(new ByActionPropertyResponderClassNameResolver());
     }
 }

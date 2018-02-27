@@ -3,10 +3,22 @@
 namespace HydrefLab\Laravel\ADR\Tests;
 
 use HydrefLab\Laravel\ADR\Action\ActionResolver;
+use HydrefLab\Laravel\ADR\Action\Resolver\DefaultActionClassNameResolver;
 use PHPUnit\Framework\TestCase;
 
 class ActionResolverTest extends TestCase
 {
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        ActionResolver::extend(new DefaultActionClassNameResolver());
+    }
+
+    /**
+     * @return array
+     */
     public function actionClassNamePartsProvider()
     {
         return [

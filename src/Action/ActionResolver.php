@@ -2,10 +2,15 @@
 
 namespace HydrefLab\Laravel\ADR\Action;
 
-use Illuminate\Support\Str;
-
 class ActionResolver
 {
+    /**
+     * Registered resolvers.
+     *
+     * @var array
+     */
+    protected static $resolvers = [];
+
     /**
      * Resolve action class name.
      *
@@ -16,17 +21,25 @@ class ActionResolver
      */
     public static function resolveClassName(string $namespace, string $resource, string $actionType): string
     {
-        $resource = ('index' !== Str::lower($actionType))
-            ? Str::singular($resource)
-            : Str::plural($resource);
+        foreach (array_reverse(static::$resolvers) as $resolver) {
+            $actionClassName = $resolver($namespace, $resource, $actionType);
 
-        $actionClassName = sprintf(
-            '%s\%s%sAction',
-            $namespace,
-            ucfirst(Str::lower($actionType)),
-            ucfirst(Str::lower($resource))
-        );
+            if (false === is_null($actionClassName)) {
+                return $actionClassName;
+            }
+        }
 
-        return trim($actionClassName, '\\');
+        return null;
+    }
+
+    /**
+     * Register resolver.
+     *
+     * @param callable $resolver
+     * @return void
+     */
+    public static function extend(callable $resolver)
+    {
+        static::$resolvers[] = $resolver;
     }
 }
