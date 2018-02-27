@@ -2,20 +2,20 @@
 
 namespace HydrefLab\Laravel\ADR\Tests;
 
-use HydrefLab\Laravel\ADR\Responder\Resolver\ByAttributeResponderResolver;
+use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionPropertyResponderClassNameResolver;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyAction;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyActionResponder;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyEmptyAction;
 use PHPUnit\Framework\TestCase;
 
-class ByAttributeResponderResolverTest extends TestCase
+class ByActionPropertyResponderClassNameResolverTest extends TestCase
 {
     /**
      * @return void
      */
     public function testResolveResponderClassNameForActionWithoutResponderClass()
     {
-        $this->assertNull((new ByAttributeResponderResolver())(DummyEmptyAction::class));
+        $this->assertNull((new ByActionPropertyResponderClassNameResolver())(DummyEmptyAction::class));
     }
 
     /**
@@ -23,7 +23,7 @@ class ByAttributeResponderResolverTest extends TestCase
      */
     public function testResolveResponderClassNameForActionWithResponderClass()
     {
-        $this->assertEquals(DummyActionResponder::class, (new ByAttributeResponderResolver())(DummyAction::class));
+        $this->assertEquals(DummyActionResponder::class, (new ByActionPropertyResponderClassNameResolver())(DummyAction::class));
     }
 
     /**
@@ -31,6 +31,6 @@ class ByAttributeResponderResolverTest extends TestCase
      */
     public function testResolveResponderClassNameForNonExistingAction()
     {
-        $this->assertNull((new ByAttributeResponderResolver())('Non\Existing\Action'));
+        $this->assertNull((new ByActionPropertyResponderClassNameResolver())('Non\Existing\Action'));
     }
 }

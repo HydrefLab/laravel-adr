@@ -2,8 +2,8 @@
 
 namespace HydrefLab\Laravel\ADR\Tests;
 
-use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderResolver;
-use HydrefLab\Laravel\ADR\Responder\Resolver\ByAttributeResponderResolver;
+use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderClassNameResolver;
+use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionPropertyResponderClassNameResolver;
 use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyAction;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyActionResponder;
@@ -18,8 +18,8 @@ class ResponderResolverTest extends TestCase
      */
     public function setUp()
     {
-        ResponderResolver::extend(new ByActionClassNameResponderResolver());
-        ResponderResolver::extend(new ByAttributeResponderResolver());
+        ResponderResolver::extend(new ByActionClassNameResponderClassNameResolver());
+        ResponderResolver::extend(new ByActionPropertyResponderClassNameResolver());
     }
 
     /**

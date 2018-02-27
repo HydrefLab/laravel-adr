@@ -2,7 +2,7 @@
 
 namespace HydrefLab\Laravel\ADR\Tests;
 
-use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderResolver;
+use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderClassNameResolver;
 use HydrefLab\Laravel\ADR\Responder\ResponderInterface;
 use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyClassB;
@@ -21,7 +21,7 @@ class HelpersTest extends TestCase
     public function testHelperCreatesResponder()
     {
         Container::getInstance()->instance('request', new Request());
-        ResponderResolver::extend(new ByActionClassNameResponderResolver());
+        ResponderResolver::extend(new ByActionClassNameResponderClassNameResolver());
 
         /** @var ResponderInterface $responder */
         $responder = (new DummyResponderAction())();

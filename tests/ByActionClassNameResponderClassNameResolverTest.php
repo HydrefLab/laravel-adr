@@ -2,11 +2,14 @@
 
 namespace HydrefLab\Laravel\ADR\Tests;
 
-use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderResolver;
+use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderClassNameResolver;
 use PHPUnit\Framework\TestCase;
 
-class ByActionClassNameResponderResolverTest extends TestCase
+class ByActionClassNameResponderClassNameResolverTest extends TestCase
 {
+    /**
+     * @return array
+     */
     public function actionClassNameProvider()
     {
         return [
@@ -26,6 +29,6 @@ class ByActionClassNameResponderResolverTest extends TestCase
      */
     public function testResolveResponderClassName(string $actionClassName, string $expected)
     {
-        $this->assertEquals($expected, (new ByActionClassNameResponderResolver())($actionClassName));
+        $this->assertEquals($expected, (new ByActionClassNameResponderClassNameResolver())($actionClassName));
     }
 }

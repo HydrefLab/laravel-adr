@@ -2,10 +2,10 @@
 
 namespace HydrefLab\Laravel\ADR\Responder\Resolver;
 
-class ByAttributeResponderResolver
+class ByActionPropertyResponderClassNameResolver
 {
     /**
-     * Resolve responder class name by attribute.
+     * Resolve responder class name by action property.
      *
      * 'responderClass' variable from action class is used to resolve responder class name.
      *

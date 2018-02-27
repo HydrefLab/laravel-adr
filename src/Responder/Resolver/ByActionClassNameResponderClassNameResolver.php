@@ -2,7 +2,7 @@
 
 namespace HydrefLab\Laravel\ADR\Responder\Resolver;
 
-class ByActionClassNameResponderResolver
+class ByActionClassNameResponderClassNameResolver
 {
     /**
      * Resolve responder class name by action class name.
