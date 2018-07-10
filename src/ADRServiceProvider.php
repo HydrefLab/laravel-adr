@@ -25,16 +25,11 @@ class ADRServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__ . '/stubs/Action.stub' => app_path('Http/Actions/Action.php')
-        ]);
-
-        $this->commands([
-            ActionMakeCommand::class,
-            ActionResourceMakeCommand::class,
-            ResponderMakeCommand::class,
-            ResponderResourceMakeCommand::class,
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/stubs/Action.stub' => app_path('Http/Actions/Action.php')
+            ]);
+        }
     }
 
     /**
@@ -47,6 +42,13 @@ class ADRServiceProvider extends ServiceProvider
         $this->addAdrResourceRouteMacros();
         $this->extendActionResolver();
         $this->extendResponderResolver();
+
+        $this->commands([
+            ActionMakeCommand::class,
+            ActionResourceMakeCommand::class,
+            ResponderMakeCommand::class,
+            ResponderResourceMakeCommand::class,
+        ]);
     }
 
     /**
