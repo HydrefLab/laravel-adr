@@ -74,6 +74,10 @@ class ADRServiceProvider extends ServiceProvider
                 'only' => ['index', 'show', 'store', 'update', 'destroy'],
             ], $options));
         });
+
+        Route::macro('setDefaultMiddleware', function (bool $setDefaultMiddleware = true) {
+            $this->container->instance('middleware.setDefault', $setDefaultMiddleware);
+        });
     }
 
     /**

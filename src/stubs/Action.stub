@@ -10,4 +10,34 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 class Action extends BaseAction
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * @var bool|null
+     */
+    protected $setDefaultMiddleware = null;
+
+    public function __construct()
+    {
+        if ($this->shouldSetDefaultMiddleware()) {
+            $request = request();
+
+            if ($request->isJson() || $request->expectsJson()) {
+                $this->middleware('api');
+            } else {
+                $this->middleware('web');
+            }
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function shouldSetDefaultMiddleware(): bool
+    {
+        if (!is_null($this->setDefaultMiddleware) && is_bool($this->setDefaultMiddleware)) {
+            return $this->setDefaultMiddleware;
+        }
+
+        return app()->bound('middleware.setDefault') && true === app()->make('middleware.setDefault');
+    }
 }
