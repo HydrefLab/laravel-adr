@@ -77,10 +77,10 @@ abstract class Responder implements ResponderInterface
 
     /**
      * @param Request $request
-     * @param $data
+     * @param mixed $data
      * @param int $status
      * @param array $headers
-     * @param \Closure $callback
+     * @param \Closure|null $callback
      */
     public function __construct(Request $request, $data, int $status = 200, array $headers = [], \Closure $callback = null)
     {
