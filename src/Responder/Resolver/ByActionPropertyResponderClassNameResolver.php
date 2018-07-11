@@ -7,7 +7,7 @@ class ByActionPropertyResponderClassNameResolver
     /**
      * Resolve responder class name by action property.
      *
-     * 'responderClass' variable from action class is used to resolve responder class name.
+     * 'responderClass' property from action class is used to resolve responder class name.
      *
      * @param string $actionClassName
      * @return null|string
