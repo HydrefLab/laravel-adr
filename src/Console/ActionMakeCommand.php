@@ -93,6 +93,19 @@ class ActionMakeCommand extends GeneratorCommand
     }
 
     /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
+    protected function getNameInput()
+    {
+        $name = trim($this->argument('name'));
+        $name = ends_with($name, 'Action') ? $name : $name . 'Action';
+
+        return $name;
+    }
+
+    /**
      * Get the stub file for the generator.
      *
      * @return string

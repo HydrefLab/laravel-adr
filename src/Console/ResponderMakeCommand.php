@@ -29,6 +29,28 @@ class ResponderMakeCommand extends GeneratorCommand
     protected $type = 'Responder';
 
     /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
+    protected function getNameInput()
+    {
+        $name = trim($this->argument('name'));
+
+        if (ends_with($name, 'Action')) {
+            $name .= 'Responder';
+        } else if (ends_with($name, 'Responder') && !ends_with($name, 'ActionResponder')) {
+            $name  = str_replace_last('Responder', 'ActionResponder', $name);
+        }
+
+        if (!ends_with($name, 'ActionResponder')) {
+            $name .= 'ActionResponder';
+        }
+
+        return $name;
+    }
+
+    /**
      * Get the stub file for the generator.
      *
      * @return string
