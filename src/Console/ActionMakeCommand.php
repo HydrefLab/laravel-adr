@@ -103,7 +103,7 @@ class ActionMakeCommand extends GeneratorCommand
 
         return (!is_null($actionType))
             ? __DIR__ . "/stubs/action/$actionType.stub"
-            : __DIR__ . '/stubs/action.stub';
+            : __DIR__ . '/stubs/action/index.stub';
     }
 
     /**
@@ -145,7 +145,7 @@ class ActionMakeCommand extends GeneratorCommand
         return [
             ['responder', 'r', InputOption::VALUE_NONE, 'Generate an action responder.'],
 
-            ['responder_type', 't', InputOption::VALUE_OPTIONAL, 'Generated action responder type.'],
+            ['responder_type', 't', InputOption::VALUE_OPTIONAL, 'Set action responder type (plain or extended).'],
         ];
     }
 }

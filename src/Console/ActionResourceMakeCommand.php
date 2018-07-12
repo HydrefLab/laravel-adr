@@ -46,9 +46,9 @@ class ActionResourceMakeCommand extends GeneratorCommand
     {
         foreach ($this->getActionTypes() as $actionType) {
             $this->call('make:adr:action', [
-                'name' => $this->getActionClassName($this->argument('resource'), $actionType),
+                'name' => $this->getActionClassName($this->argument('name'), $actionType),
                 '--responder' => $this->option('responder'),
-                '--responder_type' => (true === $this->option('responder')) ? $this->option('type') : null,
+                '--responder_type' => (true === $this->option('responder')) ? $this->option('responder_type') : null,
             ]);
         }
     }
@@ -88,7 +88,7 @@ class ActionResourceMakeCommand extends GeneratorCommand
      */
     protected function getActionTypes()
     {
-        if ('api' === $this->option('type')) {
+        if (true === $this->option('api')) {
             $this->actionTypes = ['index', 'show', 'store', 'update', 'destroy'];
         }
 
@@ -120,7 +120,7 @@ class ActionResourceMakeCommand extends GeneratorCommand
     protected function getArguments()
     {
         return [
-            ['resource', InputArgument::REQUIRED, 'The name of the resource'],
+            ['name', InputArgument::REQUIRED, 'The name of the resource'],
         ];
     }
 
@@ -132,13 +132,15 @@ class ActionResourceMakeCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['type', 't', InputOption::VALUE_OPTIONAL, 'Specify resource type.'],
+            ['api', 'a', InputOption::VALUE_NONE, 'Generate api resource.'],
 
-            ['only', 'o', InputOption::VALUE_OPTIONAL, 'Set resource only actions.'],
+            ['only', 'o', InputOption::VALUE_OPTIONAL, 'Set resource \'only\' actions.'],
 
-            ['except', 'e', InputOption::VALUE_OPTIONAL, 'Set resource except actions.'],
+            ['except', 'e', InputOption::VALUE_OPTIONAL, 'Set resource \'except\' actions.'],
 
             ['responder', 'r', InputOption::VALUE_NONE, 'Generate an action responder.'],
+
+            ['responder_type', 't', InputOption::VALUE_OPTIONAL, 'Set action responder type (plain or extended).']
         ];
     }
 }

@@ -37,7 +37,7 @@ class ResponderResourceMakeCommand extends ActionResourceMakeCommand
     {
         foreach ($this->getActionTypes() as $actionType) {
             $this->call('make:adr:responder', [
-                'name' => $this->getResponderClassName($this->argument('resource'), $actionType),
+                'name' => $this->getResponderClassName($this->argument('name'), $actionType),
                 '--type' => $this->option('type'),
             ]);
         }
@@ -72,11 +72,13 @@ class ResponderResourceMakeCommand extends ActionResourceMakeCommand
     protected function getOptions()
     {
         return [
-            ['type', 't', InputOption::VALUE_OPTIONAL, 'Responder type (api or web).'],
+            ['api', 'a', InputOption::VALUE_NONE, 'Generate api resource responders.'],
 
-            ['only', 'o', InputOption::VALUE_OPTIONAL, 'Set resource only responders.'],
+            ['only', 'o', InputOption::VALUE_OPTIONAL, 'Set resource \'only\' responders.'],
 
-            ['except', 'e', InputOption::VALUE_OPTIONAL, 'Set resource except responders.'],
+            ['except', 'e', InputOption::VALUE_OPTIONAL, 'Set resource \'except\' responders.'],
+
+            ['type', 't', InputOption::VALUE_OPTIONAL, 'Responder type (plain or extended).'],
         ];
     }
 }

@@ -35,9 +35,11 @@ class ResponderMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return (!is_null($this->option('type')) && in_array($this->option('type'), ['api', 'web']))
-            ? __DIR__ . "/stubs/responder/{$this->option('type')}.stub"
-            : __DIR__ . '/stubs/responder.stub';
+        $type = (!is_null($this->option('type')) && in_array($this->option('type'), ['plain', 'extended']))
+            ? $this->option('type')
+            : 'plain';
+
+        return __DIR__ . "/stubs/responder/{$type}.stub";
     }
 
     /**
@@ -59,7 +61,7 @@ class ResponderMakeCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['type', 't', InputOption::VALUE_OPTIONAL, 'Responder type (api or web).'],
+            ['type', 't', InputOption::VALUE_OPTIONAL, 'Responder type (plain or extended).'],
         ];
     }
 }
