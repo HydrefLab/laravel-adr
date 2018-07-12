@@ -2,15 +2,20 @@
 
 namespace DummyNamespace;
 
-use HydrefLab\Laravel\ADR\Responder\Responder;
+use HydrefLab\Laravel\ADR\Responder\ResponderInterface;
 
-class DummyClass extends Responder
+class DummyClass implements ResponderInterface
 {
+    public function __construct()
+    {
+        //
+    }
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function respond(): \Symfony\Component\HttpFoundation\Response
     {
-        return parent::respond();
+        //
     }
 }
