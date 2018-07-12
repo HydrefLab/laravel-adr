@@ -101,7 +101,7 @@ class ActionMakeCommand extends GeneratorCommand
     {
         $actionType = $this->getActionType();
 
-        return (false === is_null($actionType))
+        return (!is_null($actionType))
             ? __DIR__ . "/stubs/action/$actionType.stub"
             : __DIR__ . '/stubs/action.stub';
     }

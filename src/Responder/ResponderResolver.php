@@ -25,7 +25,7 @@ class ResponderResolver
     {
         $responderClassName = static::resolveClassName($actionClassName);
 
-        if (false === is_null($responderClassName) && true === class_exists($responderClassName)) {
+        if (!is_null($responderClassName) && class_exists($responderClassName)) {
             $responder = new $responderClassName($request, ...$response);
 
             if (false === $responder instanceof ResponderInterface) {
@@ -49,7 +49,7 @@ class ResponderResolver
         foreach (array_reverse(static::$resolvers) as $resolver) {
             $responderClassName = $resolver($actionClassName);
 
-            if (false === is_null($responderClassName)) {
+            if (!is_null($responderClassName)) {
                 return $responderClassName;
             }
         }

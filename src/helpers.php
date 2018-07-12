@@ -4,7 +4,7 @@ use HydrefLab\Laravel\ADR\Responder\ResponderFactory;
 use HydrefLab\Laravel\ADR\Responder\ResponderInterface;
 use Illuminate\Container\Container;
 
-if (false === function_exists('get_caller_class')) {
+if (!function_exists('get_caller_class')) {
     /**
      * Get class name of a caller object.
      *
@@ -16,7 +16,7 @@ if (false === function_exists('get_caller_class')) {
         $class = $trace[1]['class'] ?? null;
 
         for ($i = 1; $i < count($trace); $i++) {
-            if (true === isset($trace[$i]) && true === isset($trace[$i]['class']) && $class != $trace[$i]['class']) {
+            if (isset($trace[$i]) && isset($trace[$i]['class']) && $class != $trace[$i]['class']) {
                 return $trace[$i]['class'];
             }
         }
@@ -25,7 +25,7 @@ if (false === function_exists('get_caller_class')) {
     }
 }
 
-if (false === function_exists('responder')) {
+if (!function_exists('responder')) {
     /**
      * Create new responder.
      *

@@ -92,9 +92,9 @@ class ActionResourceMakeCommand extends GeneratorCommand
             $this->actionTypes = ['index', 'show', 'store', 'update', 'destroy'];
         }
 
-        if (false === is_null($this->option('only'))) {
+        if (!is_null($this->option('only'))) {
             return array_intersect($this->actionTypes, explode(',', $this->option('only')));
-        } elseif (false === is_null($this->option('except'))) {
+        } elseif (!is_null($this->option('except'))) {
             return array_diff($this->actionTypes, explode(',', $this->option('except')));
         }
 

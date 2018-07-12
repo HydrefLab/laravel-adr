@@ -35,7 +35,7 @@ class ResponderMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return (false === is_null($this->option('type')) && true === in_array($this->option('type'), ['api', 'web']))
+        return (!is_null($this->option('type')) && in_array($this->option('type'), ['api', 'web']))
             ? __DIR__ . "/stubs/responder/{$this->option('type')}.stub"
             : __DIR__ . '/stubs/responder.stub';
     }

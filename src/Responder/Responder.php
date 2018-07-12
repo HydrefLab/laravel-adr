@@ -110,7 +110,7 @@ abstract class Responder implements ResponderInterface
         $format = $this->getResponseFormat();
         $method = $this->responseFormatMap[$format];
 
-        if (true === method_exists($this, $method)) {
+        if (method_exists($this, $method)) {
             return $this->{$method}();
         }
 
@@ -146,7 +146,7 @@ abstract class Responder implements ResponderInterface
      */
     protected function html(): Response
     {
-        $view = (true === $this->data instanceof View)
+        $view = ($this->data instanceof View)
             ? $this->data
             : view($this->viewTemplate, $this->data);
 
@@ -160,7 +160,7 @@ abstract class Responder implements ResponderInterface
      */
     protected function json(): JsonResponse
     {
-        return (true === $this->data instanceof Responsable)
+        return ($this->data instanceof Responsable)
             ? $this->data->toResponse($this->request)
             : new JsonResponse($this->data, $this->status, $this->headers);
     }
