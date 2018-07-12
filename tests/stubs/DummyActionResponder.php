@@ -33,6 +33,7 @@ class DummyActionResponder implements ResponderInterface
         $this->data = $data;
         $this->status = $status;
     }
+
     /**
      * @return mixed
      */

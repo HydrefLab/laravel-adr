@@ -26,6 +26,7 @@ class DummyResponderActionResponder implements ResponderInterface
         $this->request = $request;
         $this->data = $data;
     }
+
     /**
      * @return mixed
      */

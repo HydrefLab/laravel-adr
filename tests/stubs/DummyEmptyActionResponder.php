@@ -25,6 +25,7 @@ class DummyEmptyActionResponder
         $this->request = $request;
         $this->data = $data;
     }
+
     /**
      * @return mixed
      */
