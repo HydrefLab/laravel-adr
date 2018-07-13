@@ -29,6 +29,10 @@ class ADRServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../stubs/Action.stub' => app_path('Http/Actions/Action.php')
             ]);
+
+            $this->publishes([
+                __DIR__.'/../config/config.php' => config_path('adr.php'),
+            ], 'config');
         }
     }
 
