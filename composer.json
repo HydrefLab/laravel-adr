@@ -16,13 +16,13 @@
     ],
     "require": {
         "php": ">=7.0",
-        "illuminate/container": "5.5.*",
-        "illuminate/console": "5.5.*",
-        "illuminate/contracts": "5.5.*",
-        "illuminate/http": "5.5.*",
-        "illuminate/routing": "5.5.*",
-        "illuminate/support": "5.5.*",
-        "illuminate/view": "5.5.*"
+        "illuminate/container": "5.5.*|5.6.*",
+        "illuminate/console": "5.5.*|5.6.*",
+        "illuminate/contracts": "5.5.*|5.6.*",
+        "illuminate/http": "5.5.*|5.6.*",
+        "illuminate/routing": "5.5.*|5.6.*",
+        "illuminate/support": "5.5.*|5.6.*",
+        "illuminate/view": "5.5.*|5.6.*"
 
     },
     "require-dev": {
@@ -39,6 +39,16 @@
     "autoload-dev": {
         "psr-4": {
             "HydrefLab\\Laravel\\ADR\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "HydrefLab\\Laravel\\ADR\\ADRServiceProvider"
+            ]
         }
     }
 }
