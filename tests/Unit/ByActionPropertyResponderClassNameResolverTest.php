@@ -1,12 +1,12 @@
 <?php
 
-namespace HydrefLab\Laravel\ADR\Tests;
+namespace HydrefLab\Laravel\ADR\Tests\Unit;
 
 use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionPropertyResponderClassNameResolver;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyAction;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyActionResponder;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyEmptyAction;
-use PHPUnit\Framework\TestCase;
+use HydrefLab\Laravel\ADR\Tests\TestCase;
 
 class ByActionPropertyResponderClassNameResolverTest extends TestCase
 {

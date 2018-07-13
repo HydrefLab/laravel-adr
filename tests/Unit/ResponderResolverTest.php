@@ -1,27 +1,16 @@
 <?php
 
-namespace HydrefLab\Laravel\ADR\Tests;
+namespace HydrefLab\Laravel\ADR\Tests\Unit;
 
-use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderClassNameResolver;
-use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionPropertyResponderClassNameResolver;
 use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyAction;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyActionResponder;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyEmptyAction;
+use HydrefLab\Laravel\ADR\Tests\TestCase;
 use Illuminate\Http\Request;
-use PHPUnit\Framework\TestCase;
 
 class ResponderResolverTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function setUp()
-    {
-        ResponderResolver::extend(new ByActionClassNameResponderClassNameResolver());
-        ResponderResolver::extend(new ByActionPropertyResponderClassNameResolver());
-    }
-
     /**
      * @return void
      */

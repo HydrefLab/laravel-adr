@@ -1,12 +1,20 @@
 <?php
 
-namespace HydrefLab\Laravel\ADR\Tests;
+namespace HydrefLab\Laravel\ADR\Tests\Unit;
 
 use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderClassNameResolver;
-use PHPUnit\Framework\TestCase;
+use HydrefLab\Laravel\ADR\Tests\TestCase;
 
 class ByActionClassNameResponderClassNameResolverTest extends TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        config(['adr.namespace.actions' => 'DummyNamespace\Actions']);
+        config(['adr.namespace.responders' => 'DummyNamespace\Responders']);
+    }
+
     /**
      * @return array
      */
@@ -16,7 +24,7 @@ class ByActionClassNameResponderClassNameResolverTest extends TestCase
             ['DummyAction', 'DummyActionResponder'],
             ['DummyNamespace\DummyAction', 'DummyNamespace\DummyActionResponder'],
             ['DummyNamespace\Actions\DummyAction', 'DummyNamespace\Responders\DummyActionResponder'],
-            ['DummyNamespace\Actions\DummyModule\Actions\DummyAction', 'DummyNamespace\Responders\DummyModule\Responders\DummyActionResponder'],
+            ['DummyNamespace\Actions\DummyModule\DummyAction', 'DummyNamespace\Responders\DummyModule\DummyActionResponder'],
             ['\DummyNamespace\DummyAction', 'DummyNamespace\DummyActionResponder'],
         ];
     }

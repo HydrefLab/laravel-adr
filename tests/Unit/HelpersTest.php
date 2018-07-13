@@ -1,16 +1,14 @@
 <?php
 
-namespace HydrefLab\Laravel\ADR\Tests;
+namespace HydrefLab\Laravel\ADR\Tests\Unit;
 
-use HydrefLab\Laravel\ADR\Responder\Resolver\ByActionClassNameResponderClassNameResolver;
 use HydrefLab\Laravel\ADR\Responder\ResponderInterface;
-use HydrefLab\Laravel\ADR\Responder\ResponderResolver;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyClassB;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyResponderAction;
 use HydrefLab\Laravel\ADR\Tests\stubs\DummyResponderActionResponder;
+use HydrefLab\Laravel\ADR\Tests\TestCase;
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
-use PHPUnit\Framework\TestCase;
 
 class HelpersTest extends TestCase
 {
@@ -21,7 +19,6 @@ class HelpersTest extends TestCase
     public function testHelperCreatesResponder()
     {
         Container::getInstance()->instance('request', new Request());
-        ResponderResolver::extend(new ByActionClassNameResponderClassNameResolver());
 
         /** @var ResponderInterface $responder */
         $responder = (new DummyResponderAction())();
