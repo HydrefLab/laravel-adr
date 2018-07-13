@@ -100,7 +100,7 @@ class ActionMakeCommand extends GeneratorCommand
     protected function getNameInput()
     {
         $name = trim($this->argument('name'));
-        $name = ends_with($name, 'Action') ? $name : $name . 'Action';
+        $name = ends_with($name, config('adr.postfix.actions', '')) ? $name : $name . config('adr.postfix.actions', '');
 
         return $name;
     }
@@ -145,7 +145,7 @@ class ActionMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Http\Actions';
+        return config('adr.namespace.actions', $rootNamespace);
     }
 
     /**

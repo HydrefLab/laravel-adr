@@ -36,16 +36,7 @@ class ResponderMakeCommand extends GeneratorCommand
     protected function getNameInput()
     {
         $name = trim($this->argument('name'));
-
-        if (ends_with($name, 'Action')) {
-            $name .= 'Responder';
-        } else if (ends_with($name, 'Responder') && !ends_with($name, 'ActionResponder')) {
-            $name  = str_replace_last('Responder', 'ActionResponder', $name);
-        }
-
-        if (!ends_with($name, 'ActionResponder')) {
-            $name .= 'ActionResponder';
-        }
+        $name = ends_with($name, config('adr.postfix.responders', '')) ? $name : $name . config('adr.postfix.responders', '');
 
         return $name;
     }
@@ -67,12 +58,12 @@ class ResponderMakeCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Http\Responders';
+        return config('adr.namespace.responders', $rootNamespace);
     }
 
     /**

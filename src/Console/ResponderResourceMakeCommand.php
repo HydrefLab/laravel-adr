@@ -54,17 +54,6 @@ class ResponderResourceMakeCommand extends ActionResourceMakeCommand
     }
 
     /**
-     * Get the default namespace for the class.
-     *
-     * @param  string  $rootNamespace
-     * @return string
-     */
-    protected function getDefaultNamespace($rootNamespace)
-    {
-        return $rootNamespace . '\Http\Responders';
-    }
-
-    /**
      * Get the console command options.
      *
      * @return array
