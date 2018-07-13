@@ -16,8 +16,12 @@ class ByActionClassNameResponderClassNameResolver
 
         $responderClassName = sprintf(
             '%s\\%s',
-            str_replace('Actions', 'Responders', implode('\\', array_slice($actionClassName, 0, -1))),
-            last($actionClassName) . 'Responder'
+            str_replace(
+                config('adr.namespace.actions', ''),
+                config('adr.namespace.responders', ''),
+                implode('\\', array_slice($actionClassName, 0, -1))
+            ),
+            last($actionClassName) . config('adr.postfix.responders')
         );
 
         return trim($responderClassName, '\\');

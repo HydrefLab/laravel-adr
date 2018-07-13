@@ -21,10 +21,11 @@ class DefaultActionClassNameResolver
             : Str::plural($resource);
 
         $actionClassName = sprintf(
-            '%s\%s%sAction',
+            '%s\%s%s%s',
             $namespace,
             ucfirst(Str::lower($actionType)),
-            ucfirst(Str::lower($resource))
+            ucfirst(Str::lower($resource)),
+            config('adr.postfix.actions', '')
         );
 
         return trim($actionClassName, '\\');
