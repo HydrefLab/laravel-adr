@@ -68,6 +68,10 @@ class ADRServiceProvider extends ServiceProvider
                 $namespace = '';
             }
 
+            if (empty($namespace)) {
+                $namespace = config('adr.namespace.actions', '');
+            }
+
             return new PendingResourceRegistration(
                 new ADRResourceRegistrar($this), $name, $namespace, $options
             );
