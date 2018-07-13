@@ -12,13 +12,15 @@ class Action extends BaseAction
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
+     * Flag for enabling/disabling default middleware groups for this action
+     *
      * @var bool|null
      */
-    protected $setDefaultMiddleware = null;
+    protected $applyDefaultMiddleware = null;
 
     public function __construct()
     {
-        if ($this->shouldSetDefaultMiddleware()) {
+        if ($this->shouldApplyDefaultMiddleware()) {
             $request = request();
 
             if ($request->isJson() || $request->expectsJson()) {
@@ -30,14 +32,18 @@ class Action extends BaseAction
     }
 
     /**
+     * Determine if default middleware group(s) should be applied for this particular action
+     *
+     * Action property, if set, takes precedence over global configuration.
+     *
      * @return bool
      */
-    protected function shouldSetDefaultMiddleware(): bool
+    protected function shouldApplyDefaultMiddleware(): bool
     {
-        if (!is_null($this->setDefaultMiddleware) && is_bool($this->setDefaultMiddleware)) {
-            return $this->setDefaultMiddleware;
+        if (!is_null($this->applyDefaultMiddleware) && is_bool($this->applyDefaultMiddleware)) {
+            return $this->applyDefaultMiddleware;
         }
 
-        return app()->bound('middleware.setDefault') && true === app()->make('middleware.setDefault');
+        return app()->bound('middleware.applyDefaultForAdr') && true === app()->make('middleware.applyDefaultForAdr');
     }
 }

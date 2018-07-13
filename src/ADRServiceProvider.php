@@ -75,8 +75,8 @@ class ADRServiceProvider extends ServiceProvider
             ], $options));
         });
 
-        Route::macro('setDefaultMiddleware', function (bool $setDefaultMiddleware = true) {
-            $this->container->instance('middleware.setDefault', $setDefaultMiddleware);
+        Route::macro('applyDefaultAdrMiddleware', function (bool $applyDefaultMiddleware = true) {
+            $this->container->instance('middleware.applyDefaultForAdr', $applyDefaultMiddleware);
         });
     }
 
