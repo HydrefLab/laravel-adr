@@ -28,7 +28,7 @@ class ADRServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../stubs/Action.stub' => app_path('Http/Actions/Action.php')
-            ]);
+            ], 'stub');
 
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('adr.php'),
