@@ -19,7 +19,6 @@ After, run:
 ```bash
 php artisan vendor:publish --provider=HydrefLab\\Laravel\\ADR\\ADRServiceProvider
 ```
-to create base action class in `app\Http\Actions` directory.
 
 ## Documentation
 
